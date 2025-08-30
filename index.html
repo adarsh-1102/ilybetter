@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Special Someone</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background: linear-gradient(135deg, #ffb347 0%, #ffcc33 100%); min-height:100vh; display:flex; justify-content:center; align-items:center; overflow-x:hidden; color:#333; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; position:relative; }
+    .container { background: rgba(255,255,255,0.95); border-radius:20px; box-shadow:0 15px 50px rgba(0,0,0,0.3); padding:30px; width:100%; max-width:800px; text-align:center; position:relative; overflow:hidden; }
+    h1 { color: #6a0dad; margin-bottom:15px; font-size:32px; text-shadow:1px 1px 4px rgba(0,0,0,0.2); }
+    .photo-container { width:280px; height:280px; margin:20px auto; border-radius:50%; overflow:hidden; box-shadow:0 8px 25px rgba(0,0,0,0.2); transition:transform 1.2s; display:none; border:5px solid #6a0dad; }
+    .photo { width:100%; height:100%; object-fit:cover; display:block; transition:transform 1.5s ease-in-out; }
+    .message { opacity:0; transform:translateY(20px); transition:opacity 1s, transform 1s; margin-bottom:20px; text-align:left; line-height:1.6; padding:15px; background: rgba(106,13,173,0.05); border-radius:10px; color:#4b0082; }
+    .heart { color: #ff4c4c; }
+    button { background: #6a0dad; color:white; border:none; padding:14px 28px; border-radius:50px; cursor:pointer; font-size:18px; transition:all 0.3s; margin:15px 5px; outline:none; box-shadow:0 5px 15px rgba(106,13,173,0.4); }
+    button:hover { background:#4b0082; transform:translateY(-3px); box-shadow:0 8px 20px rgba(106,13,173,0.6); }
+    button:active { transform:translateY(0); }
+    .final-container { display:flex; align-items:flex-start; justify-content:center; gap:30px; margin-top:25px; display:none; }
+    .final-text-container { flex:1; text-align:left; padding-left:20px; font-family:'Georgia', serif; color:#4b0082; }
+    .memory-container { display:none; background: rgba(255,255,255,0.9); padding:20px; border-radius:15px; margin:20px 0; box-shadow:0 5px 15px rgba(0,0,0,0.1); text-align:left; border-left:4px solid #6a0dad; }
+    .hearts-container, .sparkles-container { position:absolute; width:100%; height:100%; top:0; left:0; pointer-events:none; z-index:1; }
+    .heart-shape, .sparkle { position:absolute; font-size:22px; color:#ff4c4c; opacity:0; animation: float 6s linear forwards; z-index:-1; }
+    .sparkle { font-size:8px; color:gold; opacity:0.7; animation: sparkle 4s linear infinite; }
+    .music-control { position:fixed; bottom:20px; right:20px; background:#6a0dad; color:white; width:50px; height:50px; border-radius:50%; display:flex; justify-content:center; align-items:center; cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,0.2); z-index:100; }
+    .progress-container { height:8px; width:100%; background:#f1f1f1; border-radius:10px; margin:20px 0; overflow:hidden; }
+    .progress-bar { height:100%; width:0%; background: linear-gradient(to right, #6a0dad, #4b0082); transition:width 0.5s; }
+    .hidden { display:none; }
+    .highlight-love { color:#b22222; font-weight:bold; font-size:28px; font-family:'Pacifico', cursive; text-shadow:0 0 8px rgba(178,34,34,0.8); animation: glow 1.5s infinite alternate; }
+    @keyframes float { 0% { transform:translateY(0) rotate(0deg); opacity:0.7; } 100% { transform:translateY(-100vh) rotate(360deg); opacity:0; } }
+    @keyframes sparkle { 0% { transform:translateY(0) scale(1); opacity:0.8; } 50% { transform:translateY(-50px) scale(1.2); opacity:0.3; } 100% { transform:translateY(-100px) scale(0.8); opacity:0; } }
+    @keyframes glow { 0% { text-shadow:0 0 4px rgba(178,34,34,0.6);} 100% { text-shadow:0 0 15px rgba(178,34,34,1);} }
+    @media(max-width:768px){ .final-container{ flex-direction:column; align-items:center; } .final-text-container{ padding-left:0; margin-top:20px; } .photo-container{ width:200px; height:200px; } }
+</style>
+</head>
+<body>
+
+<div class="hearts-container" id="heartsContainer"></div>
+<div class="sparkles-container" id="sparklesContainer"></div>
+
+<div class="container">
+    <div class="header">
+        <h1>For Someone <span class="heart">Special</span></h1>
+        <p>This is for you, Smriti</p>
+    </div>
+
+    <div id="introMessage" class="message">
+        <p>I created this little interactive page just for you...</p>
+        <p>There's something I've been wanting to say for a while now.</p>
+    </div>
+
+    <div id="progressContainer" class="progress-container hidden">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <button id="startBtn">Click to Begin This Journey</button>
+
+    <div id="interactiveSection" class="hidden">
+        <p>Before I tell you what's in my heart, let's take a quick journey...</p>
+        <button id="memoryBtn"><i class="fas fa-heart"></i> Remember our first meeting?</button>
+        <button id="laughBtn"><i class="fas fa-laugh"></i> Your laughter is my favorite sound</button>
+        <button id="continueBtn" class="hidden">Continue to My Heart</button>
+
+        <div id="memoryMessage" class="memory-container">
+            <h3><i class="fas fa-heart"></i> Our First Meeting</h3>
+            <p>I'll never forget the first time we met. It was a cloudy afternoon, and you walked in with that bright smile that lit up the entire room. I knew from that moment that you were someone special.</p>
+        </div>
+
+        <div id="laughMessage" class="memory-container">
+            <h3><i class="fas fa-laugh"></i> Your Beautiful Laugh</h3>
+            <p>Your laughter is like music to my ears. It's infectious and brightens even my darkest days. I find myself doing silly things just to hear you laugh, and it's always worth it.</p>
+        </div>
+    </div>
+
+    <div id="finalContainer" class="final-container">
+        <div class="photo-container" id="finalPhotoContainer">
+            <img src="https://i.ibb.co/v4Sp8918/s1.jpg" alt="Our Memory" class="photo" id="finalPhoto">
+        </div>
+        <div id="finalTextContainer" class="final-text-container"></div>
+    </div>
+
+    <div class="music-control hidden" id="musicControl">
+        <i class="fas fa-pause"></i>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="1.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+    const startBtn=document.getElementById('startBtn');
+    const memoryBtn=document.getElementById('memoryBtn');
+    const laughBtn=document.getElementById('laughBtn');
+    const continueBtn=document.getElementById('continueBtn');
+    const introMessage=document.getElementById('introMessage');
+    const progressContainer=document.getElementById('progressContainer');
+    const progressBar=document.getElementById('progressBar');
+    const interactiveSection=document.getElementById('interactiveSection');
+    const finalContainer=document.getElementById('finalContainer');
+    const finalPhotoContainer=document.getElementById('finalPhotoContainer');
+    const finalPhoto=document.getElementById('finalPhoto');
+    const memoryMessage=document.getElementById('memoryMessage');
+    const laughMessage=document.getElementById('laughMessage');
+    const heartsContainer=document.getElementById('heartsContainer');
+    const sparklesContainer=document.getElementById('sparklesContainer');
+    const musicControl=document.getElementById('musicControl');
+    const bgMusic=document.getElementById('bgMusic');
+    const finalTextContainer=document.getElementById('finalTextContainer');
+
+    function typeWriter(text, element, speed=50,callback){
+        let i=0;element.innerHTML='';
+        function type(){if(i<text.length){element.innerHTML+=text.charAt(i);i++;setTimeout(type,speed);}else if(callback)callback();}
+        type();
+    }
+
+    function typeWriterHTMLSafe(htmlText, element, speed=50, callback){
+        let temp=document.createElement('div'); temp.innerHTML=htmlText;
+        function typeNode(node,parent,done){
+            if(node.nodeType===Node.TEXT_NODE){ let i=0; function typeChar(){ if(i<node.textContent.length){ parent.append(node.textContent.charAt(i)); i++; setTimeout(typeChar,speed);} else done(); } typeChar();}
+            else if(node.nodeType===Node.ELEMENT_NODE){ const el=document.createElement(node.tagName); for(let attr of node.attributes) el.setAttribute(attr.name,attr.value); parent.appendChild(el); let children=Array.from(node.childNodes); function typeChildren(index){ if(index<children.length) typeNode(children[index],el,()=>typeChildren(index+1)); else done();} typeChildren(0); }
+        }
+        let nodes=Array.from(temp.childNodes); function typeAll(index){ if(index<nodes.length) typeNode(nodes[index],element,()=>typeAll(index+1)); else if(callback) callback(); } typeAll(0);
+    }
+
+    function playMusic(){ bgMusic.volume=0; bgMusic.play().catch(err=>{}); let vol=0; const fade=setInterval(()=>{ if(vol<0.7){ vol+=0.01; bgMusic.volume=vol; }else clearInterval(fade); },50); musicControl.classList.remove('hidden'); musicControl.innerHTML='<i class="fas fa-pause"></i>'; }
+    
+    function createHearts(){ setInterval(()=>{ const heart=document.createElement('div'); heart.classList.add('heart-shape'); heart.innerHTML='❤'; heart.style.left=Math.random()*100+'%'; heart.style.animationDuration=(Math.random()*4+3)+'s'; heartsContainer.appendChild(heart); setTimeout(()=>heart.remove(),6000);},300); }
+    function createSparkles(){ setInterval(()=>{ const s=document.createElement('div'); s.classList.add('sparkle'); s.innerHTML='✦'; s.style.left=Math.random()*100+'%'; sparklesContainer.appendChild(s); setTimeout(()=>s.remove(),4000); },200); }
+
+    startBtn.addEventListener('click',function(){ introMessage.style.opacity=1; introMessage.style.transform='translateY(0)'; startBtn.classList.add('hidden'); progressContainer.classList.remove('hidden'); let width=0; const interval=setInterval(()=>{ if(width>=100){ clearInterval(interval); showInteractiveSection(); }else{ width++; progressBar.style.width=width+'%'; }},30); });
+    
+    function showInteractiveSection(){ progressContainer.classList.add('hidden'); interactiveSection.classList.remove('hidden'); createHearts(); }
+
+    memoryBtn.addEventListener('click',function(){ memoryMessage.style.display='block'; this.classList.add('clicked'); this.style.opacity='0.7'; checkButtonsClicked(); });
+    laughBtn.addEventListener('click',function(){ laughMessage.style.display='block'; this.classList.add('clicked'); this.style.opacity='0.7'; checkButtonsClicked(); });
+    function checkButtonsClicked(){ if(memoryBtn.classList.contains('clicked') && laughBtn.classList.contains('clicked')) continueBtn.classList.remove('hidden'); }
+
+    continueBtn.addEventListener('click',function(){
+        interactiveSection.classList.add('hidden'); finalContainer.style.display='flex'; finalPhotoContainer.style.display='block';
+        finalPhoto.style.transform='scale(1.05)'; playMusic(); createHearts(); createSparkles();
+        const finalParagraphs=[
+            "Heyy...this is Adarsh orr your Gadha and whatsoever....",
+            "I know this is kinda out of the blue...but I think it's now or never....",
+            "I think this is the time....",
+            "<span class='highlight-love'>I love you Smriti....</span>",
+            "I can't hold it anymore and also I don't wanna keep any regrets...",
+            "Let me know your response on whatsapp"
+        ];
+        let idx=0;
+        function typeNext(){ if(idx<finalParagraphs.length){ const p=document.createElement('p'); finalTextContainer.appendChild(p);
+            if(finalParagraphs[idx].includes('<span')) typeWriterHTMLSafe(finalParagraphs[idx],p,80,()=>{idx++;typeNext();});
+            else typeWriter(finalParagraphs[idx],p,80,()=>{idx++;typeNext();}); }}
+        typeNext();
+    });
+
+    let musicPlaying=true;
+    musicControl.addEventListener('click',function(){ if(musicPlaying){ bgMusic.pause(); musicControl.innerHTML='<i class="fas fa-play"></i>'; } else { bgMusic.play(); musicControl.innerHTML='<i class="fas fa-pause"></i>'; } musicPlaying=!musicPlaying; });
+});
+</script>
+
+</body>
+</html>
