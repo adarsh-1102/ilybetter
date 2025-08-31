@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For My Special Someone</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<!-- ✅ Added Dancing Script font -->
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Pacifico&display=swap&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
 <style>
     *{margin:0;padding:0;box-sizing:border-box;}
@@ -132,12 +131,19 @@
         color:#4b0082;
         line-height:1.8;
     }
-    /* ✅ Only changed here */
+    /* ✅ Updated: Carolyna Pro Black font for the highlight text */
+    @font-face {
+        font-family: 'CarolynaProBlack';
+        src: url('CarolynaProBlack.woff2') format('woff2'),
+             url('CarolynaProBlack.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
     .highlight-love{
         font-size:28px;
         color:#b22222;
         font-weight:bold;
-        font-family:'Dancing Script',cursive;
+        font-family:'CarolynaProBlack', cursive;
         text-shadow:1px 1px 6px rgba(178,34,34,0.5);
     }
     .hearts-container{
@@ -150,7 +156,7 @@
         0%{transform:translateY(0) rotate(0deg) scale(1);opacity:0.7;}
         100%{transform:translateY(-100vh) rotate(360deg) scale(1.5);opacity:0;}
     }
-    @keyframes fadeIn{from{opacity:0;transform:translateY(15px);}to{opacity:1;transform:translateY(0);}}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(15px);}to{opacity:1;transform:translateY(0);} }
     @keyframes popIn{0%{transform:scale(0.5);opacity:0;}100%{transform:scale(1);opacity:1;}}
     .music-control{
         position:fixed;bottom:20px;right:20px;
@@ -162,9 +168,7 @@
         transition:transform 0.3s;
     }
     .music-control:hover{transform:scale(1.1);}
-    .hidden {
-        display: none !important;
-    }
+    .hidden {display: none !important;}
 </style>
 </head>
 <body>
@@ -187,7 +191,6 @@
 
     <button id="startBtn">✨ Click to Begin This Journey ✨</button>
 
-    <!-- hidden at first -->
     <div id="interactiveSection" class="hidden">
         <p>Before I tell you what's in my heart, let's take a little journey...</p>
         <button id="memoryBtn"><i class="fas fa-heart"></i> Our First Meeting</button>
