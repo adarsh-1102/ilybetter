@@ -160,6 +160,10 @@
         transition:transform 0.3s;
     }
     .music-control:hover{transform:scale(1.1);}
+    /* 🔥 FIX HERE */
+    .hidden {
+        display: none !important;
+    }
 </style>
 </head>
 <body>
@@ -182,6 +186,7 @@
 
     <button id="startBtn">✨ Click to Begin This Journey ✨</button>
 
+    <!-- hidden at first -->
     <div id="interactiveSection" class="hidden">
         <p>Before I tell you what's in my heart, let's take a little journey...</p>
         <button id="memoryBtn"><i class="fas fa-heart"></i> Our First Meeting</button>
@@ -277,7 +282,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     startBtn.addEventListener('click',()=>{
         introMessage.style.opacity=1;
         introMessage.style.transform='translateY(0)';
-        startBtn.style.display='none';
+        startBtn.classList.add('hidden');
         progressContainer.style.display='block';
         let width=0;
         const interval=setInterval(()=>{
@@ -293,7 +298,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     function checkBoth(){if(memoryBtn.disabled&&laughBtn.disabled)continueBtn.classList.remove('hidden');}
 
     continueBtn.addEventListener('click',()=>{
-        interactiveSection.style.display='none';
+        interactiveSection.classList.add('hidden');
         finalContainer.style.display='flex';
         finalPhotoContainer.style.display='block';
         playMusic();createHearts();
