@@ -154,6 +154,49 @@
     }
     .music-control:hover{transform:scale(1.1);}
     .hidden {display: none !important;}
+
+    /* Chat box & send button */
+    .chat-box {
+        border: 1px solid #6a0dad;
+        border-radius: 15px;
+        padding: 14px 14px 50px 14px; /* extra bottom padding for send button */
+        width: 90%;
+        max-width: 400px;
+        height: 180px;
+        color: #4b0082;
+        font-size: 17px;
+        line-height: 1.5;
+        font-family: 'Quicksand', sans-serif;
+        white-space: pre-wrap;
+        overflow-y: auto;
+        background: #fff;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        position: relative;
+    }
+    .send-btn {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        padding: 6px 14px;
+        font-size: 15px;
+        background: linear-gradient(135deg,#ff4c4c,#6a0dad);
+        border: none;
+        border-radius: 25px;
+        color: white;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    @media (max-width: 500px){
+        .chat-box {
+            height: 150px;
+            font-size: 15px;
+        }
+        .send-btn {
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+    }
 </style>
 </head>
 <body>
@@ -293,7 +336,6 @@ document.addEventListener('DOMContentLoaded',()=>{
         playMusic();
         createHearts();
 
-        // Entire final message inside one chat box
         const finalMessage = `Heyy... this is Adarsh or your Gadha and whatsoever...
 I know this is kinda out of the blue... but I think it's now or never...
 I think this is the time...
@@ -301,34 +343,27 @@ I love you Smriti ❤️
 I can't hold it anymore and I don’t want to keep any regrets...
 So... let me know your response on WhatsApp... 😅`;
 
+        // Chat wrapper
         const chatWrapper = document.createElement('div');
-        chatWrapper.style.display = 'flex';
-        chatWrapper.style.alignItems = 'center';
-        chatWrapper.style.gap = '10px';
+        chatWrapper.style.position = 'relative';
         chatWrapper.style.margin = '12px 0';
+        chatWrapper.style.display = 'inline-block';
 
+        // Fixed-size textbox
         const chatBox = document.createElement('div');
-        chatBox.style.border = '1px solid #6a0dad';
-        chatBox.style.borderRadius = '12px';
-        chatBox.style.padding = '10px 14px';
-        chatBox.style.minWidth = '300px';
-        chatBox.style.color = '#4b0082';
-        chatBox.style.fontSize = '17px';
-        chatBox.style.lineHeight = '1.5';
-        chatBox.style.fontFamily = 'Quicksand, sans-serif';
-        chatBox.style.whiteSpace = 'pre-wrap';
+        chatBox.classList.add('chat-box');
 
+        // Send button
         const sendBtn = document.createElement('button');
+        sendBtn.classList.add('send-btn');
         sendBtn.textContent = 'Send';
-        sendBtn.style.padding = '6px 12px';
-        sendBtn.style.fontSize = '16px';
-        sendBtn.style.cursor = 'pointer';
         sendBtn.disabled = true;
 
         chatWrapper.appendChild(chatBox);
         chatWrapper.appendChild(sendBtn);
         finalTextContainer.appendChild(chatWrapper);
 
+        // Typing effect
         typeWriterHTMLSafe(finalMessage, chatBox, 50, ()=>{
             sendBtn.textContent = 'Sent!';
             sendBtn.disabled = false;
