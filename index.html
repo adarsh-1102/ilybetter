@@ -131,21 +131,6 @@
         color:#4b0082;
         line-height:1.8;
     }
-    /* ✅ Updated: Carolyna Pro Black font for the highlight text */
-    @font-face {
-        font-family: 'CarolynaProBlack';
-        src: url('CarolynaProBlack.woff2') format('woff2'),
-             url('CarolynaProBlack.woff') format('woff');
-        font-weight: normal;
-        font-style: normal;
-    }
-    .highlight-love{
-        font-size:28px;
-        color:#b22222;
-        font-weight:bold;
-        font-family:'CarolynaProBlack', cursive;
-        text-shadow:1px 1px 6px rgba(178,34,34,0.5);
-    }
     .hearts-container{
         position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;
     }
@@ -301,28 +286,53 @@ document.addEventListener('DOMContentLoaded',()=>{
     laughBtn.addEventListener('click',()=>{laughMessage.style.display='block';laughBtn.disabled=true;checkBoth();});
     function checkBoth(){if(memoryBtn.disabled&&laughBtn.disabled)continueBtn.classList.remove('hidden');}
 
-    continueBtn.addEventListener('click',()=>{
+    continueBtn.addEventListener('click', ()=>{
         interactiveSection.classList.add('hidden');
         finalContainer.style.display='flex';
         finalPhotoContainer.style.display='block';
-        playMusic();createHearts();
-        const texts=[
-            "Heyy... this is Adarsh or your Gadha and whatsoever...",
-            "I know this is kinda out of the blue... but I think it's now or never...",
-            "I think this is the time...",
-            "<span class='highlight-love'>I love you Smriti ❤️</span>",
-            "I can't hold it anymore and I don’t want to keep any regrets...",
-            "So... let me know your response on WhatsApp... 😅"
-        ];
-        let idx=0;
-        function typeNext(){
-            if(idx<texts.length){
-                const p=document.createElement('p');
-                finalTextContainer.appendChild(p);
-                typeWriterHTMLSafe(texts[idx],p,70,()=>{idx++;typeNext();});
-            }
-        }
-        typeNext();
+        playMusic();
+        createHearts();
+
+        // Entire final message inside one chat box
+        const finalMessage = `Heyy... this is Adarsh or your Gadha and whatsoever...
+I know this is kinda out of the blue... but I think it's now or never...
+I think this is the time...
+I love you Smriti ❤️
+I can't hold it anymore and I don’t want to keep any regrets...
+So... let me know your response on WhatsApp... 😅`;
+
+        const chatWrapper = document.createElement('div');
+        chatWrapper.style.display = 'flex';
+        chatWrapper.style.alignItems = 'center';
+        chatWrapper.style.gap = '10px';
+        chatWrapper.style.margin = '12px 0';
+
+        const chatBox = document.createElement('div');
+        chatBox.style.border = '1px solid #6a0dad';
+        chatBox.style.borderRadius = '12px';
+        chatBox.style.padding = '10px 14px';
+        chatBox.style.minWidth = '300px';
+        chatBox.style.color = '#4b0082';
+        chatBox.style.fontSize = '17px';
+        chatBox.style.lineHeight = '1.5';
+        chatBox.style.fontFamily = 'Quicksand, sans-serif';
+        chatBox.style.whiteSpace = 'pre-wrap';
+
+        const sendBtn = document.createElement('button');
+        sendBtn.textContent = 'Send';
+        sendBtn.style.padding = '6px 12px';
+        sendBtn.style.fontSize = '16px';
+        sendBtn.style.cursor = 'pointer';
+        sendBtn.disabled = true;
+
+        chatWrapper.appendChild(chatBox);
+        chatWrapper.appendChild(sendBtn);
+        finalTextContainer.appendChild(chatWrapper);
+
+        typeWriterHTMLSafe(finalMessage, chatBox, 50, ()=>{
+            sendBtn.textContent = 'Sent!';
+            sendBtn.disabled = false;
+        });
     });
 
     let playing=true;
